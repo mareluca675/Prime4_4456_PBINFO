@@ -1,0 +1,72 @@
+#include <fstream>
+
+using namespace std;
+
+bool isPrime(int n)
+{
+    int d;
+    
+    if(n <= 1)
+    {
+        return false;   
+    }
+    if(n == 2)
+    {
+        return true;
+    }
+    if(n == 3)
+    {
+        return true;
+    }
+    if(n % 3 == 0)
+    {
+        return false;
+    }
+    if(n % 2 == 0)
+    {
+        return false;
+    }
+    for(d = 5; d * d <= n; d += 6)
+    {
+        if(n % d == 0 or n % (d + 2) == 0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    int n, i, a, fv[100001], maxim = 0, special;
+    
+    ifstream fin("prime4.in");
+    ofstream fout("prime4.out");
+    
+    fin >> n;
+    
+    for(i = 1; i <= n; i ++)
+    {
+        fin >> a;
+        
+        if(isPrime(a) == true)
+        {
+            fv[a] ++;
+            
+            if(fv[a] > maxim)
+            {
+                maxim = fv[a];
+                special = a;
+            }
+            else if(fv[a] == maxim)
+            {
+                if(special > a)
+                {
+                    special = a;
+                }
+            }
+        }
+    }
+    
+    fout << special;
+}
